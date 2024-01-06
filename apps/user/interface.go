@@ -18,10 +18,8 @@ type Service interface {
 	QueryUser(context.Context, *QueryUserRequest) (*UserSet, error)
 	// DescribeUser 查询用户详情, 通过Id查询,
 	DescribeUser(context.Context, *DescribeUserRequest) (*User, error)
-
-	// 作业:
-	// 用户修改
-	// 用户删除
+	AlterUser(context.Context, *AlterUserRequest) (*User, error)
+	DeleteUser(context.Context, *DeleteUserRequest) error
 }
 
 // CreateUserRequest 用户创建的参数
@@ -50,5 +48,18 @@ type UserSet struct {
 }
 
 type DescribeUserRequest struct {
+	UserId int
+}
+
+// AlterUserRequest modify the user data
+type AlterUserRequest struct {
+	*DescribeUserRequest
+	Password string
+	Role     string
+	Label    map[string]string
+}
+
+// DeleteUserRequest delete user by id
+type DeleteUserRequest struct {
 	UserId int
 }
