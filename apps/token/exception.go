@@ -1,7 +1,7 @@
 package token
 
 import (
-	"goProjects/yyblog/exception"
+	"github.com/yenyoong99/goProjects_yyblog/exception"
 )
 
 var (

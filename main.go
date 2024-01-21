@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"goProjects/yyblog/apps/token/api"
-	tokenimpl "goProjects/yyblog/apps/token/impl"
-	userimpl "goProjects/yyblog/apps/user/impl"
+	"github.com/yenyoong99/goProjects_yyblog/apps/token/api"
+	tokenimpl "github.com/yenyoong99/goProjects_yyblog/apps/token/impl"
+	userimpl "github.com/yenyoong99/goProjects_yyblog/apps/user/impl"
 )
 
 func main() {

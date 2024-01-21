@@ -1,7 +1,7 @@
 package impl
 
 import (
-	"goProjects/yyblog/conf"
+	"github.com/yenyoong99/goProjects_yyblog/conf"
 	"gorm.io/gorm"
 )
 

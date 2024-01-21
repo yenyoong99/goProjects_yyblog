@@ -2,7 +2,7 @@ package exception
 
 import (
 	"fmt"
-	"github.com/yenyoong99/mcube/tools/pretty"
+	"github.com/infraboard/mcube/tools/pretty"
 )
 
 func NewAPIException(code int, reason string) *APIException {

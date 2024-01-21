@@ -3,7 +3,7 @@ package impl
 import (
 	"context"
 
-	"goProjects/yyblog/apps/token"
+	"github.com/yenyoong99/goProjects_yyblog/apps/token"
 )
 
 // Data operations that need to be reused

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"goProjects/yyblog/exception"
+	"github.com/yenyoong99/goProjects_yyblog/exception"
 )
 
 // Success API, return data

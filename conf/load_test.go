@@ -3,7 +3,7 @@ package conf_test
 import (
 	"testing"
 
-	"goProjects/yyblog/conf"
+	"github.com/yenyoong99/goProjects_yyblog/conf"
 )
 
 func TestLoadFromFile(t *testing.T) {
@@ -22,4 +22,3 @@ func TestLoadFromEnv(t *testing.T) {
 	}
 	t.Log(conf.C())
 }
-

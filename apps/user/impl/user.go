@@ -1,7 +1,7 @@
 package impl
 
 import (
-	"goProjects/yyblog/apps/user"
+	"github.com/yenyoong99/goProjects_yyblog/apps/user"
 
 	"context"
 )

@@ -1,9 +1,9 @@
 package impl
 
 import (
-	"goProjects/yyblog/apps/token"
-	"goProjects/yyblog/apps/user"
-	"goProjects/yyblog/conf"
+	"github.com/yenyoong99/goProjects_yyblog/apps/token"
+	"github.com/yenyoong99/goProjects_yyblog/apps/user"
+	"github.com/yenyoong99/goProjects_yyblog/conf"
 	"gorm.io/gorm"
 )
 

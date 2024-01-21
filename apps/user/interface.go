@@ -2,9 +2,8 @@ package user
 
 import (
 	"context"
-
 	"github.com/go-playground/validator/v10"
-	"github.com/yenyoong99/mcube/tools/pretty"
+	"github.com/infraboard/mcube/tools/pretty"
 	"golang.org/x/crypto/bcrypt"
 )
 

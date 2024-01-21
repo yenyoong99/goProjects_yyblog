@@ -2,9 +2,9 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"goProjects/yyblog/apps/token"
-	"goProjects/yyblog/conf"
-	"goProjects/yyblog/response"
+	"github.com/yenyoong99/goProjects_yyblog/apps/token"
+	"github.com/yenyoong99/goProjects_yyblog/conf"
+	"github.com/yenyoong99/goProjects_yyblog/response"
 )
 
 func NewTokenApiHandler(svc token.Service) *TokenApiHandler {

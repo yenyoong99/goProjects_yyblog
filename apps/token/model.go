@@ -2,11 +2,11 @@ package token
 
 import (
 	"fmt"
+	"github.com/infraboard/mcube/tools/pretty"
 	"time"
 
 	"github.com/rs/xid"
-	"github.com/yenyoong99/mcube/tools/pretty"
-	"goProjects/yyblog/apps/user"
+	"github.com/yenyoong99/goProjects_yyblog/apps/user"
 )
 
 const (

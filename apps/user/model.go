@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/yenyoong99/mcube/tools/pretty"
+	"github.com/infraboard/mcube/tools/pretty"
 	"time"
 )
 

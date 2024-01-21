@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"goProjects/yyblog/apps/token"
-	"goProjects/yyblog/apps/token/impl"
-	ui "goProjects/yyblog/apps/user/impl"
+	"github.com/yenyoong99/goProjects_yyblog/apps/token"
+	"github.com/yenyoong99/goProjects_yyblog/apps/token/impl"
+	ui "github.com/yenyoong99/goProjects_yyblog/apps/user/impl"
 )
 
 var (

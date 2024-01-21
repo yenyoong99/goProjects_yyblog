@@ -3,7 +3,7 @@ package user_test
 import (
 	"testing"
 
-	"goProjects/yyblog/apps/user"
+	"github.com/yenyoong99/goProjects_yyblog/apps/user"
 )
 
 // $2a$10$1MvkjvWOS0/Rf.cEKKxeie/Y7ADz9XZTq09Wd/bKwX/vUv0kdYJ4.
