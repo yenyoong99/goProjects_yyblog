@@ -1,55 +1,132 @@
 package user
 
-import "context"
+import (
+	"context"
 
-// Service 面向对象
-// user.Service, 设计你这个模块提供的接口
-// 接口定义, 一定要考虑兼容性, 接口的参数不能变
+	"github.com/go-playground/validator/v10"
+	"github.com/yenyoong99/mcube/tools/pretty"
+	"golang.org/x/crypto/bcrypt"
+)
+
+const (
+	// AppName module name
+	AppName = "users"
+)
+
+var (
+	v = validator.New()
+)
+
+// Service object-oriented
+// user.Service
+// define interface, Considering compatibility, the parameters of the interface cannot be changed.
 type Service interface {
 	// CreateUser
-	// 用户创建
 	// (username, password, role string, lable map[string]string)
-	// 设计CreateUserRequest, 可以扩展对象, 而不影响接口的定义
-	// 1. 这个接口支持取消吗? 要支持取消应该怎么办?
-	// 2. 这个接口支持Trace, TraceId怎么传递？
-	// 中间件参数，取消/Trace/... 怎么产生怎么传递
 	CreateUser(context.Context, *CreateUserRequest) (*User, error)
-	// QueryUser 查询用户列表, 对象列表 [{}]
+	// QueryUser Query user list, object list [{}]
 	QueryUser(context.Context, *QueryUserRequest) (*UserSet, error)
-	// DescribeUser 查询用户详情, 通过Id查询,
+	// DescribeUser Query user details, use id check
 	DescribeUser(context.Context, *DescribeUserRequest) (*User, error)
 	AlterUser(context.Context, *AlterUserRequest) (*User, error)
 	DeleteUser(context.Context, *DeleteUserRequest) error
 }
 
-// CreateUserRequest 用户创建的参数
-type CreateUserRequest struct {
-	Username string
-	Password string
-	Role     string
-	Label    map[string]string
+func NewCreateUserRequest() *CreateUserRequest {
+	return &CreateUserRequest{
+		Role:  string(rune(RoleMember)),
+		Label: map[string]string{},
+	}
 }
 
-// QueryUserRequest 查询用户列表
+// CreateUserRequest create user param
+type CreateUserRequest struct {
+	Username string `json:"username" validate:"required" gorm:"column:username"`
+	Password string `json:"password" validate:"required" gorm:"column:password"`
+	Role     string `json:"role" validate:"required" gorm:"column:role"`
+	// https://gorm.io/docs/serializer.html
+	Label map[string]string `json:"label" gorm:"column:label" serializer:"json"`
+}
+
+func (req *CreateUserRequest) hashPassword() {
+	hp, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return
+	}
+
+	req.Password = string(hp)
+
+}
+
+func (req *CreateUserRequest) CheckPassword(pass string) error {
+	return bcrypt.CompareHashAndPassword([]byte(req.Password), []byte(pass))
+}
+
+func (req *CreateUserRequest) Validate() error {
+	//if req.Username = "" {
+	//	return fmt.Errorf("username is required")
+	//}
+	//
+	//if req.Password = "" {
+	//	return fmt.Errorf("password is required")
+	//}
+
+	// validator library validator.New()
+	return v.Struct(req)
+}
+
+func NewQueryUserRequest() *QueryUserRequest {
+	return &QueryUserRequest{
+		PageSize:   20,
+		PageNumber: 1,
+	}
+
+}
+
+// QueryUserRequest Query user list
 type QueryUserRequest struct {
-	// 分页大小, 一个多少个
+	// Page size
 	PageSize int
-	// 当前页, 查询哪一页的数据
+	// Current page
 	PageNumber int
-	// 更加用户name查找用户
+	// Find user by changing user name
 	Username string
+}
+
+func (req *QueryUserRequest) Offset() int {
+	return req.PageSize * (req.PageNumber - 1)
+
+}
+
+func NewUserSet() *UserSet {
+	return &UserSet{
+		Items: []*User{},
+	}
 }
 
 type UserSet struct {
-	// 总共有多少个
+	// How many there in total
 	Total int64
-	// 当前查询的数据清单
+	// List of data currently queried
 	Items []*User
+}
+
+func (u *UserSet) String() string {
+	return pretty.ToJSON(u)
+}
+
+func NewDescribeUserRequest(uid int) *DescribeUserRequest {
+	return &DescribeUserRequest{
+		UserId: uid,
+	}
+
 }
 
 type DescribeUserRequest struct {
 	UserId int
 }
+
+// alter user func
 
 // AlterUserRequest modify the user data
 type AlterUserRequest struct {
@@ -57,7 +134,10 @@ type AlterUserRequest struct {
 	Password string
 	Role     string
 	Label    map[string]string
+	UpdateAt string
 }
+
+// delete user func
 
 // DeleteUserRequest delete user by id
 type DeleteUserRequest struct {
