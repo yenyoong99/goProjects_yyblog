@@ -93,6 +93,10 @@ type QueryUserRequest struct {
 	Username string
 }
 
+func (req *QueryUserRequest) Limit() int {
+	return req.PageSize
+}
+
 func (req *QueryUserRequest) Offset() int {
 	return req.PageSize * (req.PageNumber - 1)
 
