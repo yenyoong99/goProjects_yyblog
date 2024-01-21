@@ -2,6 +2,14 @@ package token
 
 import (
 	"context"
+	"fmt"
+	"net/http"
+	"net/url"
+	"strings"
+)
+
+const (
+	AppName = "tokens"
 )
 
 // Service Token Service
@@ -26,10 +34,18 @@ func NewIssueTokenRequest(username, password string) *IssueTokenRequest {
 
 // IssueTokenRequest issue token
 type IssueTokenRequest struct {
-	Username string
-	Password string
+	Username string `json:"username"`
+	Password string `json:"password"`
 	// extend token expired time to 1 week
-	RemindMe bool
+	RemindMe bool `json:"remind_me"`
+}
+
+func NewRevokeTokenRequest(accessToken, refreshToken string) *RevokeTokenRequest {
+	return &RevokeTokenRequest{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+	}
+
 }
 
 // RevokeTokenRequest revoke token
@@ -40,6 +56,35 @@ type RevokeTokenRequest struct {
 	RefreshToken string
 }
 
+func NewValidateTokenRequest(accessToken string) *ValidateTokenRequest {
+	return &ValidateTokenRequest{
+		AccessToken: accessToken,
+	}
+
+}
+
 type ValidateTokenRequest struct {
 	AccessToken string
+}
+
+func GetAccessTokenFromHttp(req *http.Request) string {
+	// custom header, Ex:Authorization: xxx Bearer xxx
+	ah := req.Header.Get(TOKEN_HEADER_KEY)
+	if ah != "" {
+		hv := strings.Split(ah, " ")
+		if len(hv) > 1 {
+			return hv[1]
+		}
+	}
+
+	// Cookies
+	ck, err := req.Cookie(TOKEN_COOKIE_KEY)
+	if err != nil {
+		fmt.Println(err)
+		return ""
+	}
+
+	val, _ := url.QueryUnescape(ck.Value)
+	return val
+
 }
