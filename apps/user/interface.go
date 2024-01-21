@@ -34,7 +34,7 @@ type Service interface {
 
 func NewCreateUserRequest() *CreateUserRequest {
 	return &CreateUserRequest{
-		Role:  string(rune(RoleMember)),
+		Role:  RoleMember,
 		Label: map[string]string{},
 	}
 }
@@ -43,7 +43,7 @@ func NewCreateUserRequest() *CreateUserRequest {
 type CreateUserRequest struct {
 	Username string `json:"username" validate:"required" gorm:"column:username"`
 	Password string `json:"password" validate:"required" gorm:"column:password"`
-	Role     string `json:"role" validate:"required" gorm:"column:role"`
+	Role     Role   `json:"role" validate:"required" gorm:"column:role"`
 	// https://gorm.io/docs/serializer.html
 	Label map[string]string `json:"label" gorm:"column:label" serializer:"json"`
 }
