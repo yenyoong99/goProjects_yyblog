@@ -1,18 +1,18 @@
 package user
 
-// 存放 需要入口的数据结构(PO)
+// Store the data structure (PO) that requires entry
 
-// User 用户创建成功后返回一个User对象
-// CreatedAt 为啥没用time.Time, int64(TimeStamp), 统一标准化, 避免时区你的程序产生影响
-// 在需要对时间进行展示的时候，由前端根据具体展示那个时区的时间
+// User After user successfully created, return user object
+// CreatedAt no use time.Time, int64(TimeStamp), Unify and standardize to avoid the impact of time zones on programs
+// display on front-end use the time zone
 type User struct {
-	// 用户Id
+	// user id
 	Id int
-	// 创建时间, 时间戳 10位, 秒
+	//  created time, timestamp 10 digit, sec
 	CreatedAt int64
-	// 更新时间, 时间戳 10位, 秒
+	// updated time, timestamp 10 digit, sec
 	UpdatedAt int64
 
-	// 用户参数
+	// user param
 	*CreateUserRequest
 }
