@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"github.com/yenyoong99/goProjects_yyblog/exception"
 
 	"github.com/yenyoong99/goProjects_yyblog/apps/token"
 	"github.com/yenyoong99/goProjects_yyblog/apps/user"
@@ -90,6 +91,11 @@ func (i *TokenServiceImpl) ValidateTokenRequest(
 	ctx context.Context,
 	in *token.ValidateTokenRequest) (
 	*token.Token, error) {
+
+	if in.AccessToken == "" {
+		return nil, exception.ErrUnauthorized
+	}
+	
 	// 1. query token, check token is exists
 	tk, err := i.getToken(ctx, in.AccessToken)
 	if err != nil {
