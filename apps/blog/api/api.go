@@ -15,28 +15,28 @@ type blogApiHandler struct {
 	svc blog.Service
 }
 
-func (h *blogApiHandler) Init() error {
-	h.svc = ioc.Controller().Get(blog.AppName).(blog.Service)
+func (i *blogApiHandler) Init() error {
+	i.svc = ioc.Controller().Get(blog.AppName).(blog.Service)
 	return nil
 }
 
-func (h *blogApiHandler) Destroy() error {
+func (i *blogApiHandler) Destroy() error {
 	return nil
 }
 
-func (h *blogApiHandler) Registry(rr gin.IRouter) {
+func (i *blogApiHandler) Registry(rr gin.IRouter) {
 	r := rr.Group(blog.AppName)
 
 	// guest api, no need permission
-	r.GET("/", h.QueryBlog)
-	r.GET("/:id", h.DescribeBlog)
+	r.GET("/", i.QueryBlog)
+	r.GET("/:id", i.DescribeBlog)
 
 	// add authenticate
 	r.Use(middleware.Auth)
 
 	// back-end api, need permission
-	r.POST("/", h.CreateBlog)
-	r.PATCH("/:id", h.PatchBlog)
-	r.PUT("/:id", h.UpdateBlog)
-	r.DELETE("/:id", h.DeleteBlog)
+	r.POST("/", i.CreateBlog)
+	r.PATCH("/:id", i.PatchBlog)
+	r.PUT("/:id", i.UpdateBlog)
+	r.DELETE("/:id", i.DeleteBlog)
 }

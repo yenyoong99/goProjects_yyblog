@@ -9,7 +9,7 @@ import (
 )
 
 // CreateBlog POST /yyblog/api/v1/blogs
-func (h *blogApiHandler) CreateBlog(c *gin.Context) {
+func (i *blogApiHandler) CreateBlog(c *gin.Context) {
 	// h.tk.Validate()
 	req := blog.NewCreateBlogRequest()
 
@@ -22,7 +22,7 @@ func (h *blogApiHandler) CreateBlog(c *gin.Context) {
 		response.Failed(c, err)
 		return
 	}
-	ins, err := h.svc.CreateBlog(c.Request.Context(), req)
+	ins, err := i.svc.CreateBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)
 		return
@@ -34,7 +34,7 @@ func (h *blogApiHandler) CreateBlog(c *gin.Context) {
 // /yyblog/api/v1/blogs/10 --> id = 10
 // /yyblog/api/v1/blogs/20 --> id = 20
 // c.Param("id") get request param value
-func (h *blogApiHandler) PatchBlog(c *gin.Context) {
+func (i *blogApiHandler) PatchBlog(c *gin.Context) {
 	req := blog.NewUpdateBlogRequest(c.Param("id"))
 	req.UpdateMode = common.UPDATE_MODE_PATCH
 
@@ -42,7 +42,7 @@ func (h *blogApiHandler) PatchBlog(c *gin.Context) {
 		response.Failed(c, err)
 		return
 	}
-	ins, err := h.svc.UpdateBlog(c.Request.Context(), req)
+	ins, err := i.svc.UpdateBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)
 		return
@@ -53,14 +53,14 @@ func (h *blogApiHandler) PatchBlog(c *gin.Context) {
 }
 
 // UpdateBlog PUT /yyblog/api/v1/blogs/:id
-func (h *blogApiHandler) UpdateBlog(c *gin.Context) {
+func (i *blogApiHandler) UpdateBlog(c *gin.Context) {
 	req := blog.NewUpdateBlogRequest(c.Param("id"))
 	req.UpdateMode = common.UPDATE_MODE_PUT
 	if err := c.BindJSON(req.CreateBlogRequest); err != nil {
 		response.Failed(c, err)
 		return
 	}
-	ins, err := h.svc.UpdateBlog(c.Request.Context(), req)
+	ins, err := i.svc.UpdateBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)
 		return
@@ -69,9 +69,9 @@ func (h *blogApiHandler) UpdateBlog(c *gin.Context) {
 }
 
 // DeleteBlog DELETE /yyblog/api/v1/blogs/:id
-func (h *blogApiHandler) DeleteBlog(c *gin.Context) {
+func (i *blogApiHandler) DeleteBlog(c *gin.Context) {
 	req := blog.NewDeleteBlogRequest(c.Param("id"))
-	ins, err := h.svc.DeleteBlog(c.Request.Context(), req)
+	ins, err := i.svc.DeleteBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)
 		return
@@ -80,9 +80,9 @@ func (h *blogApiHandler) DeleteBlog(c *gin.Context) {
 }
 
 // QueryBlog GET /yyblog/api/v1/blogs?page_size=10&page_number=2
-func (h *blogApiHandler) QueryBlog(c *gin.Context) {
+func (i *blogApiHandler) QueryBlog(c *gin.Context) {
 	req := blog.NewQueryBlogRequestFromGin(c)
-	set, err := h.svc.QueryBlog(c.Request.Context(), req)
+	set, err := i.svc.QueryBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)
 		return
@@ -91,9 +91,9 @@ func (h *blogApiHandler) QueryBlog(c *gin.Context) {
 }
 
 // DescribeBlog GET /yyblog/api/v1/blogs/:id
-func (h *blogApiHandler) DescribeBlog(c *gin.Context) {
+func (i *blogApiHandler) DescribeBlog(c *gin.Context) {
 	req := blog.NewDescribeBlogRequest(c.Param("id"))
-	ins, err := h.svc.DescribeBlog(c.Request.Context(), req)
+	ins, err := i.svc.DescribeBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)
 		return

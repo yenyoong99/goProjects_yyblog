@@ -15,7 +15,7 @@ const (
 type Service interface {
 	// CreateBlog Created blog
 	CreateBlog(context.Context, *CreateBlogRequest) (*Blog, error)
-	QueryBlog(context.Context, *QueryBlogRequest) (*Blog, error)
+	QueryBlog(context.Context, *QueryBlogRequest) (*BlogSet, error)
 	DescribeBlog(context.Context, *DescribeBlogRequest) (*Blog, error)
 	UpdateBlog(context.Context, *UpdateBlogRequest) (*Blog, error)
 	DeleteBlog(context.Context, *DeleteBlogRequest) (*Blog, error)
