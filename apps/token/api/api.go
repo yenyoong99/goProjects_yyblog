@@ -4,8 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/yenyoong99/goProjects_yyblog/apps/token"
 	"github.com/yenyoong99/goProjects_yyblog/conf"
+	"github.com/yenyoong99/goProjects_yyblog/ioc"
 	"github.com/yenyoong99/goProjects_yyblog/response"
 )
+
+func init() {
+	ioc.Api().Registry(token.AppName, &TokenApiHandler{})
+}
 
 func NewTokenApiHandler(svc token.Service) *TokenApiHandler {
 	return &TokenApiHandler{
@@ -16,6 +21,15 @@ func NewTokenApiHandler(svc token.Service) *TokenApiHandler {
 // TokenApiHandler RESTful interface
 type TokenApiHandler struct {
 	svc token.Service
+}
+
+func (h *TokenApiHandler) Init() error {
+	h.svc = ioc.Controller().Get(token.AppName).(token.Service)
+	return nil
+}
+
+func (h *TokenApiHandler) Destroy() error {
+	return nil
 }
 
 // Registry
