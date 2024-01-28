@@ -44,7 +44,7 @@ type CreateUserRequest struct {
 	Password string `json:"password" validate:"required" gorm:"column:password"`
 	Role     Role   `json:"role" validate:"required" gorm:"column:role"`
 	// https://gorm.io/docs/serializer.html
-	Label map[string]string `json:"label" gorm:"column:label" serializer:"json"`
+	Label map[string]string `json:"label" gorm:"column:label;serializer:json"`
 }
 
 func (req *CreateUserRequest) hashPassword() {
