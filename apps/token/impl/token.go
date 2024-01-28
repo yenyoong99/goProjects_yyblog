@@ -31,7 +31,7 @@ func (i *TokenServiceImpl) IssueToken(
 	// 1.2 verify the user password
 	u := us.Items[0]
 	if err := u.CheckPassword(in.Password); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("username or password incorrect")
 	}
 
 	// 2. if correct, issue token to user
@@ -95,7 +95,7 @@ func (i *TokenServiceImpl) ValidateTokenRequest(
 	if in.AccessToken == "" {
 		return nil, exception.ErrUnauthorized
 	}
-	
+
 	// 1. query token, check token is exists
 	tk, err := i.getToken(ctx, in.AccessToken)
 	if err != nil {
