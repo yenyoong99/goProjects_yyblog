@@ -109,9 +109,9 @@ func NewUserSet() *UserSet {
 
 type UserSet struct {
 	// How many there in total
-	Total int64
+	Total int64 `json:"total"`
 	// List of data currently queried
-	Items []*User
+	Items []*User `json:"items"`
 }
 
 func (u *UserSet) String() string {
