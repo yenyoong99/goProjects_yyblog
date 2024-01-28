@@ -23,11 +23,11 @@ func NewUser(req *CreateUserRequest) *User {
 // display on front-end use the time zone
 type User struct {
 	// user id
-	Id int
+	Id int `json:"id" gorm:"column:id"`
 	//  created time, timestamp 10 digit, sec
-	CreatedAt int64
+	CreatedAt int64 `json:"created_at" gorm:"column:created_at"`
 	// updated time, timestamp 10 digit, sec
-	UpdatedAt int64
+	UpdatedAt int64 `json:"updated_at" gorm:"column:updated_at"`
 
 	// user param
 	*CreateUserRequest
