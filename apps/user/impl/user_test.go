@@ -15,7 +15,7 @@ var (
 
 func TestCreateUser(t *testing.T) {
 	req := user.NewCreateUserRequest()
-	req.Username = "admin"
+	req.Username = "guest"
 	req.Password = "123456"
 	req.Role = user.RoleAdmin
 
@@ -41,7 +41,7 @@ func TestQueryUser(t *testing.T) {
 }
 
 func TestDescribeUser(t *testing.T) {
-	req := user.NewDescribeUserRequest(8)
+	req := user.NewDescribeUserRequest("8")
 	ul, err := i.DescribeUser(ctx, req)
 	if err != nil {
 		t.Fatal(err)

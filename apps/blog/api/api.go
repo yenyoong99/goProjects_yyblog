@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/yenyoong99/goProjects_yyblog/apps/blog"
+	"github.com/yenyoong99/goProjects_yyblog/apps/user"
 	"github.com/yenyoong99/goProjects_yyblog/ioc"
 	"github.com/yenyoong99/goProjects_yyblog/middleware"
 )
@@ -38,5 +39,6 @@ func (i *blogApiHandler) Registry(rr gin.IRouter) {
 	r.POST("/", i.CreateBlog)
 	r.PATCH("/:id", i.PatchBlog)
 	r.PUT("/:id", i.UpdateBlog)
-	r.DELETE("/:id", i.DeleteBlog)
+	// only admin role allow to delete
+	r.DELETE("/:id", middleware.Required(user.RoleAdmin), i.DeleteBlog)
 }

@@ -33,7 +33,7 @@ type Service interface {
 
 func NewCreateUserRequest() *CreateUserRequest {
 	return &CreateUserRequest{
-		Role:  RoleMember,
+		Role:  RoleVisitor,
 		Label: map[string]string{},
 	}
 }
@@ -42,7 +42,7 @@ func NewCreateUserRequest() *CreateUserRequest {
 type CreateUserRequest struct {
 	Username string `json:"username" validate:"required" gorm:"column:username"`
 	Password string `json:"password" validate:"required" gorm:"column:password"`
-	Role     Role   `json:"role" validate:"required" gorm:"column:role"`
+	Role     Role   `json:"role" gorm:"column:role"`
 	// https://gorm.io/docs/serializer.html
 	Label map[string]string `json:"label" gorm:"column:label;serializer:json"`
 }
@@ -118,7 +118,7 @@ func (u *UserSet) String() string {
 	return pretty.ToJSON(u)
 }
 
-func NewDescribeUserRequest(uid int) *DescribeUserRequest {
+func NewDescribeUserRequest(uid string) *DescribeUserRequest {
 	return &DescribeUserRequest{
 		UserId: uid,
 	}
@@ -126,7 +126,7 @@ func NewDescribeUserRequest(uid int) *DescribeUserRequest {
 }
 
 type DescribeUserRequest struct {
-	UserId int
+	UserId string
 }
 
 // alter user func

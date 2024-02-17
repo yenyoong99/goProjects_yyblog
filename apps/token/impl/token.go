@@ -107,6 +107,13 @@ func (i *TokenServiceImpl) ValidateTokenRequest(
 		return nil, err
 	}
 
-	// 3. token legal, return
+	// 3. add user role
+	u, err := i.user.DescribeUser(ctx, user.NewDescribeUserRequest(tk.UserId))
+	if err != nil {
+		return nil, err
+	}
+	tk.Role = u.Role
+
+	// 4. token legal, return
 	return tk, nil
 }

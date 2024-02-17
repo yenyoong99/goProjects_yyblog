@@ -13,6 +13,7 @@ var (
 )
 
 func init() {
+	// new(TokenServiceImpl)
 	ioc.Controller().Registry(token.AppName, &TokenServiceImpl{})
 }
 

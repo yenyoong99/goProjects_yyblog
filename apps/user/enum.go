@@ -4,6 +4,6 @@ type Role int
 
 // ROLE_MEMBER/ROLE_ADMIN
 const (
-	RoleMember Role = iota
+	RoleVisitor Role = iota
 	RoleAdmin
 )
