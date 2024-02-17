@@ -42,6 +42,12 @@ func (i *blogApiHandler) PatchBlog(c *gin.Context) {
 		response.Failed(c, err)
 		return
 	}
+
+	// get middleware info
+	if v, ok := c.Get(token.TOKEN_MIDDLEWARE_KEY); ok {
+		req.CreateBy = v.(*token.Token).UserName
+	}
+
 	ins, err := i.svc.UpdateBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)
@@ -60,6 +66,12 @@ func (i *blogApiHandler) UpdateBlog(c *gin.Context) {
 		response.Failed(c, err)
 		return
 	}
+
+	// get middleware info
+	if v, ok := c.Get(token.TOKEN_MIDDLEWARE_KEY); ok {
+		req.CreateBy = v.(*token.Token).UserName
+	}
+
 	ins, err := i.svc.UpdateBlog(c.Request.Context(), req)
 	if err != nil {
 		response.Failed(c, err)

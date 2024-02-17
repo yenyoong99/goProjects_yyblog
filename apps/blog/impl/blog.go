@@ -32,6 +32,10 @@ func (i *blogServiceImpl) QueryBlog(ctx context.Context, in *blog.QueryBlogReque
 
 	query := i.db.WithContext(ctx).Model(blog.Blog{})
 
+	if in.CreateBy != "" {
+		query = query.Where("create_by = ?", in.CreateBy)
+	}
+
 	err := query.Count(&set.Total).Error
 	if err != nil {
 		return nil, err
@@ -111,7 +115,12 @@ func (i *blogServiceImpl) UpdateBlog(ctx context.Context, req *blog.UpdateBlogRe
 	}
 
 	// update databases
-	err = i.db.WithContext(ctx).Model(&blog.Blog{}).Where("id = ?", ins.Id).Updates(ins).Error
+	stmt := i.db.WithContext(ctx).Model(&blog.Blog{}).Where("id = ?", ins.Id)
+	if req.CreateBy != "" {
+		stmt = stmt.Where("create_by = ?", ins.CreateBy)
+	}
+	err = stmt.Updates(ins).Error
+
 	if err != nil {
 		return nil, err
 	}
