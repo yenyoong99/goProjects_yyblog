@@ -1,7 +1,7 @@
 [mysql]
-  host = "127.0.0.1"
+  host = "mysql-db"
   port = 3306
   database = "yyblog"
-  username = "root"
-  password = "root"
+  username = "admin"
+  password = "admin@123"
   debug = true

@@ -70,7 +70,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL COMMENT 'encryption password',
   `label` varchar(255) NOT NULL COMMENT 'user tag',
   `role` tinyint(4) NOT NULL COMMENT 'user role',
-  `email` varchar(255) NOT NULL COMMENT `user email`
+  `email` varchar(255) NOT NULL COMMENT 'user email',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_user` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;

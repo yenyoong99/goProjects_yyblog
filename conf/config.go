@@ -27,11 +27,11 @@ func DefaultConfig() *Config {
 			Domain: "127.0.0.1",
 		},
 		MySQL: &MySQL{
-			Host:     "127.0.0.1",
+			Host:     "mysql-db",
 			Port:     3306,
 			DB:       "yyblog",
-			Username: "root",
-			Password: "root",
+			Username: "admin",
+			Password: "admin@123",
 			Debug:    true,
 		},
 	}
