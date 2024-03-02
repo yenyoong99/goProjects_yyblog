@@ -2,7 +2,7 @@ FROM golang:latest
 
 WORKDIR /backend
 
-COPY . .
+COPY backend .
 
 RUN go mod tidy
 
