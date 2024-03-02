@@ -31,15 +31,39 @@
 
 <script setup>
 import { ref } from 'vue'
+import { Message } from '@arco-design/web-vue'
+import { useRoute, useRouter } from 'vue-router'
+import { state } from '@/stores/index'
+import { LOGIN } from '@/common/api/login'
 
 const form = ref({
-  username: '',
+  username: state.value.username,
   password: '',
   is_member: false
 })
 
-const handleSubmit = (data) => {
-  console.log(data)
+const router = useRouter()
+const route = useRoute()
+
+const handleSubmit = async (data) => {
+  if (!data.errors) {
+    console.log(data)
+    const form = data.values
+
+    try {
+      let resp = await LOGIN(form)
+      state.value.isLogin = true
+      state.value.username = resp.username
+    } catch (error) {
+      Message.error(`Login Fail: ${error}`)
+    }
+
+    let to = 'BackendBlogList'
+    if (route.query.to) {
+      to = route.query.to
+    }
+    await router.push({name: to})
+  }
 }
 
 const formRules = {

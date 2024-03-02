@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/yenyoong99/goProjects_yyblog/conf"
 	"github.com/yenyoong99/goProjects_yyblog/ioc"
+	"github.com/yenyoong99/goProjects_yyblog/middleware"
 )
 
 var startCmd = &cobra.Command{
@@ -19,6 +20,9 @@ var startCmd = &cobra.Command{
 
 		// Protocol
 		engine := gin.Default()
+
+		// Cors
+		engine.Use(middleware.Cors())
 
 		rr := engine.Group("/yyblog/api/v1")
 		ioc.RegistryGinApi(rr)
