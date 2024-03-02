@@ -1,0 +1,49 @@
+{
+  "hash": "090aef9d",
+  "configHash": "3e04c0fa",
+  "lockfileHash": "e35b744f",
+  "browserHash": "dcb2adca",
+  "optimized": {
+    "vue": {
+      "src": "../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "64bac641",
+      "needsInterop": false
+    },
+    "pinia": {
+      "src": "../../node_modules/pinia/dist/pinia.mjs",
+      "file": "pinia.js",
+      "fileHash": "26de7b97",
+      "needsInterop": false
+    },
+    "@arco-design/web-vue": {
+      "src": "../../node_modules/@arco-design/web-vue/es/index.js",
+      "file": "@arco-design_web-vue.js",
+      "fileHash": "8e99fdc8",
+      "needsInterop": false
+    },
+    "@arco-design/web-vue/es/icon": {
+      "src": "../../node_modules/@arco-design/web-vue/es/icon/index.js",
+      "file": "@arco-design_web-vue_es_icon.js",
+      "fileHash": "229bf053",
+      "needsInterop": false
+    },
+    "vue-router": {
+      "src": "../../node_modules/vue-router/dist/vue-router.mjs",
+      "file": "vue-router.js",
+      "fileHash": "602f53c4",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-WAJF2XXG": {
+      "file": "chunk-WAJF2XXG.js"
+    },
+    "chunk-AYVSL3LM": {
+      "file": "chunk-AYVSL3LM.js"
+    },
+    "chunk-HEAYNT7R": {
+      "file": "chunk-HEAYNT7R.js"
+    }
+  }
+}
