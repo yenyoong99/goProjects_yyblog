@@ -1,11 +1,11 @@
 FROM golang:latest
 
-WORKDIR /yyblog_backend
+WORKDIR /backend
 
 COPY . .
 
 RUN go mod tidy
 
-RUN go build -o yyblog_backend .
+RUN go build -o backend .
 
-CMD ["./yyblog_backend", "start"]
+CMD ["./backend", "start"]

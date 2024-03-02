@@ -18,7 +18,7 @@ services:
 
   yyblog-backend:
     build:
-      context: ./backend
+      context: ./
       dockerfile: ./backend.Dockerfile
     ports:
       - "8080:8080"
@@ -35,10 +35,10 @@ services:
 
   yyblog-frontend:
     build:
-      context: ./frontend
+      context: ./
       dockerfile: ./frontend.Dockerfile
     ports:
-      - "5173:5173"
+      - "80:80"
     restart: always
 
 volumes:
