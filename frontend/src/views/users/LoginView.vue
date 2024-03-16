@@ -17,8 +17,8 @@
             </template>
           </a-input-password>
         </a-form-item>
-        <a-form-item hide-label field="is_member">
-          <a-checkbox v-model="form.is_member"> Remember </a-checkbox>
+        <a-form-item hide-label field="remember">
+          <a-checkbox v-model="form.remember"> Remember </a-checkbox>
         </a-form-item>
         <a-form-item hide-label>
           <a-button type="primary" html-type="submit" style="width: 100%">Login</a-button>
@@ -39,7 +39,7 @@ import { LOGIN } from '@/common/api/login'
 const form = ref({
   username: state.value.username,
   password: '',
-  is_member: false
+  remember: false
 })
 
 const router = useRouter()
@@ -58,7 +58,7 @@ const handleSubmit = async (data) => {
       Message.error(`Login Fail: ${error}`)
     }
 
-    let to = 'BackendBlogList'
+    let to = 'Dashboard'
     if (route.query.to) {
       to = route.query.to
     }
@@ -112,42 +112,6 @@ const formRules = {
   font-weight: bold;
   margin-bottom: 20px;
   color: #333;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-form .ant-form-item {
-  margin-bottom: 20px;
-}
-
-.login-form .ant-form-item-control-input-content {
-  border-radius: 5px;
-}
-
-.login-form .ant-input-affix-wrapper {
-  border-color: #ccc;
-}
-
-.login-form .ant-input-affix-wrapper-focused {
-  border-color: #007bff;
-  box-shadow: none;
-}
-
-.login-form .ant-checkbox-wrapper {
-  color: #333;
-}
-
-.login-form .ant-btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.login-form .ant-btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
 }
 
 .footer {
