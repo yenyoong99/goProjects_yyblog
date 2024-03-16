@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <a-config-provider :locale="enUS">
     <TopBar></TopBar>
     <div class="page">
       <router-view></router-view>
     </div>
     <div class="footer">© 2024 YYBlog. All rights reserved.</div>
-  </div>
+  </a-config-provider>
 </template>
 
 <script setup>
 import TopBar from '../../components/TopBar.vue'
+import enUS from '@arco-design/web-vue/es/locale/lang/en-us'
 </script>
 
 <style lang="css" scoped>

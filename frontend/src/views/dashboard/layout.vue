@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-config-provider :locale="enUS">
     <TopBar></TopBar>
     <div class="main">
       <div class="side-bar">
@@ -27,11 +27,12 @@
         <RouterView></RouterView>
       </div>
     </div>
-  </div>
+  </a-config-provider>
 </template>
 
 <script setup>
 import TopBar from '../../components/TopBar.vue'
+import enUS from '@arco-design/web-vue/es/locale/lang/en-us'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
