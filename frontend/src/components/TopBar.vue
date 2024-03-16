@@ -4,6 +4,7 @@
       <div>YYBlog {{ currentPath.startsWith('/dashboard') ? "Dashboard" : ""}}</div>
     </div>
     <div class="top-bar-left">
+      <a-button type="text" class="full-btn" v-if="isLogin && !currentPath.startsWith('/dashboard')" @click="Dashboard">Dashboard</a-button>
       <a-button type="text" class="full-btn" v-if="isLogin" @click="Logout">Logout</a-button>
       <a-button type="text" class="full-btn" v-else @click="Login">Login</a-button>
     </div>
@@ -23,8 +24,12 @@ const isLogin = computed(() => {
 
 const currentPath = window.location.pathname;
 
+const Dashboard = () => {
+  router.push({ name: 'Dashboard' })
+}
+
 const Logout = () => {
-  state.value.token = ''
+  state.value.token = null
   router.push({ name: 'LoginView' })
 }
 
