@@ -14,12 +14,12 @@
           <a-sub-menu key="blog">
             <template #icon><icon-apps></icon-apps></template>
             <template #title>Posts</template>
-            <a-menu-item key="BackendListBlog">All Posts</a-menu-item>
+            <a-menu-item key="PostsList">All Posts</a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="comment">
             <template #icon><icon-apps></icon-apps></template>
             <template #title>Comments</template>
-            <a-menu-item key="BackendListComment">All Comments</a-menu-item>
+            <a-menu-item key="CommentsList">All Comments</a-menu-item>
           </a-sub-menu>
         </a-menu>
       </div>
@@ -56,5 +56,6 @@ const handleMenuItemClick = (key) => {
   padding: 6px;
   overflow:auto;
   height: calc(100vh - 60px);
+  width: 100%
 }
 </style>

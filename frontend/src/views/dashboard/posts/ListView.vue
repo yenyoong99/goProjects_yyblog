@@ -8,7 +8,7 @@
     </div>
     <div class="op">
       <div>
-        <a-button type="primary" @click="router.push({name: 'BackendEditBlog'})">Create Post</a-button>
+        <a-button type="primary" @click="router.push({name: 'PostsEdit'})">Create Post</a-button>
       </div>
       <div>
         <a-input
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div>
-      <a-table :loading="isLoading" column-resizable :bordered="{cell:true}" :pagination="false" :data="data.items" >
+      <a-table :loading="isLoading" column-resizable :bordered="{cell:true}" :pagination="false" :data="data.items">
         <template #columns>
           <a-table-column title="Id" data-index="id" align="center"></a-table-column>
           <a-table-column title="Title" data-index="title" align="center"></a-table-column>
@@ -34,8 +34,8 @@
           <a-table-column title="Action" align="center">
             <template #cell="{ record }">
               <a-space>
-                <a-button @click="router.push({name: 'BackendDetailBlog', params: {id: record.id}})">Preview</a-button>
-                <a-button @click="router.push({name: 'BackendEditBlog', query: {id: record.id}})">Edit</a-button>
+                <a-button @click="router.push({name: 'PostsDetails', params: {id: record.id}})">Preview</a-button>
+                <a-button @click="router.push({name: 'PostsEdit', query: {id: record.id}})">Edit</a-button>
                 <a-button @click="$modal.info({ title:'Name', content:record.title })">Delete</a-button>
               </a-space>
             </template>
@@ -58,9 +58,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { LIST_BLOG } from '../../../api/blog'
-import { useRouter } from 'vue-router';
+import {onMounted, ref} from 'vue'
+import {LIST_BLOG} from '@/common/api/blog.js'
+import {useRouter} from 'vue-router';
 
 const router = useRouter()
 
@@ -100,15 +100,18 @@ const hanlePageNumberChange = (pageNumber) => {
 </script>
 
 <style lang="css" scoped>
+
 .op {
   margin-top: 8px;
   margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
 }
+
 .pagi {
   margin-top: 4px;
   display: flex;
   flex-direction: row-reverse;
 }
+
 </style>

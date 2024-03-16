@@ -17,7 +17,7 @@ const router = createRouter({
       component: DashboardLayout,
       children: [
         {
-          path: 'posts/list',
+          path: 'posts',
           name: 'PostsList',
           component: () => import('../views/dashboard/posts/ListView.vue')
         },
@@ -32,7 +32,7 @@ const router = createRouter({
         //   component: () => import('../views/dashboard/posts/EditView.vue')
         // },
         // {
-        //   path: 'comments/list',
+        //   path: 'comments',
         //   name: 'CommentsList',
         //   component: () => import('../views/dashboard/comments/ListView.vue')
         // }
