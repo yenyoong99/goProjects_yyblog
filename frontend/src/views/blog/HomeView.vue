@@ -1,6 +1,13 @@
 <template>
   <div class="container">
     <div class="left-column">
+
+      <a-layout v-if="searchCheck" class="layout-column">
+        <a-card>
+          search result:
+        </a-card>
+      </a-layout>
+
       <a-layout class="layout-column">
           <a-list :bordered="false" :pagination-props="paginationProps" :data="data.items">
             <template #item="{ item }">
@@ -24,7 +31,7 @@
     <div class="right-column">
       <a-layout class="layout-column">
         <a-card hoverable :style="{ width: '360px' }">
-          <a-input-search v-model="request.keywords" :style="{width:'320px'}" placeholder="Please enter something" button-text="Search" search-button @search="ListBlog" @press-enter="ListBlog"/>
+          <a-input-search v-model="request.keywords" :style="{width:'320px'}" placeholder="Please enter something" button-text="Search" search-button @search="searchTrigger" @press-enter="searchTrigger"/>
         </a-card>
       </a-layout>
 
@@ -55,6 +62,7 @@ import { reactive } from 'vue'
 import {LIST_BLOG} from '@/common/api/blog.js'
 import {onMounted, ref} from "vue";
 
+const searchCheck = ref(false)
 const isLoading = ref(false)
 const data = ref({items: [], total: 0});
 const ListBlog = async () => {
@@ -85,6 +93,11 @@ const paginationProps = reactive({
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp * 1000);
   return date.toLocaleString();
+}
+
+const searchTrigger = () =>{
+  ListBlog()
+  searchCheck.value = !!request.value.keywords
 }
 
 </script>
