@@ -27,7 +27,8 @@ func DefaultConfig() *Config {
 			Domain: "127.0.0.1",
 		},
 		MySQL: &MySQL{
-			Host:     "mysql-db",
+			Host: "mysql-db",
+			//Host:     "localhost",
 			Port:     3306,
 			DB:       "yyblog",
 			Username: "admin",

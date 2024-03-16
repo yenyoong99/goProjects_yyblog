@@ -1,8 +1,6 @@
 import axios from "axios";
-import { APP_CONFIG } from './config.js'
 
 const instance = axios.create({
-    baseURL: APP_CONFIG.DOMAIN_NAME,
     timeout: 5000,
     headers: {'Content-Type': 'application/json'},
     withCredentials: true
