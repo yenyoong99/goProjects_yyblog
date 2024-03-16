@@ -17,12 +17,12 @@ const router = useRouter()
 import { state } from '@/stores/index'
 import { computed } from 'vue'
 const isLogin = computed(() => {
-  return state.value.isLogin !== false
+  return state.value.token !== null
 })
 console.log(state.value)
 
 const Logout = () => {
-  state.value.isLogin = false
+  state.value.token = ''
   router.push({ name: 'LoginView' })
 }
 
