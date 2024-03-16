@@ -7,6 +7,18 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      name: 'BlogLayout',
+      component: () => import('../views/blog/layout.vue'),
+      children: [
+          {
+            path: '',
+            name: 'BlogView',
+            component: () => import('../views/blog/HomeView.vue')
+          }
+      ]
+    },
+    {
       path: '/login',
       name: 'LoginView',
       component: () => import('../views/users/LoginView.vue')

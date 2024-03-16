@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar">
     <div>
-      <div>YYBlog Dashboard</div>
+      <div>YYBlog {{ currentPath.startsWith('/dashboard') ? "Dashboard" : ""}}</div>
     </div>
     <div class="top-bar-left">
       <a-button type="text" class="full-btn" v-if="isLogin" @click="Logout">Logout</a-button>
@@ -19,7 +19,9 @@ import { computed } from 'vue'
 const isLogin = computed(() => {
   return state.value.token !== null
 })
-console.log(state.value)
+// console.log(state.value)
+
+const currentPath = window.location.pathname;
 
 const Logout = () => {
   state.value.token = ''
