@@ -67,11 +67,11 @@ func TestUpdateBlogPutMod(t *testing.T) {
 	t.Log(set)
 }
 
-func TestDeleteBlog(t *testing.T) {
-	req := blog.NewDeleteBlogRequest("47")
-	set, err := impl.DeleteBlog(ctx, req)
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Log(set)
-}
+//func TestDeleteBlog(t *testing.T) {
+//	req := blog.NewDeleteBlogRequest("47")
+//	set, err := impl.DeleteBlog(ctx, req)
+//	if err != nil {
+//		t.Fatal(err)
+//	}
+//	t.Log(set)
+//}

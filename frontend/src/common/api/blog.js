@@ -21,7 +21,7 @@ export var CRATE_BLOG = (data) => {
     return instance({
         url: APP_CONFIG.API_URL + 'blogs/',
         method: 'post',
-        params: data
+        data: data
     })
 }
 
@@ -29,7 +29,7 @@ export var UPDATE_BLOG = (id, data) => {
     return instance({
         url: APP_CONFIG.API_URL + `blogs/${id}`,
         method: 'patch',
-        params: data
+        data: data
     })
 }
 
