@@ -23,7 +23,7 @@
     <div>
       <a-table :loading="isLoading" column-resizable :bordered="{cell:true}" :pagination="false" :data="data.items">
         <template #columns>
-<!--          <a-table-column title="Id" data-index="id" align="center"></a-table-column>-->
+          <!--          <a-table-column title="Id" data-index="id" align="center"></a-table-column>-->
           <a-table-column title="Title" data-index="title" align="center"></a-table-column>
           <a-table-column title="Author" data-index="author" align="center"></a-table-column>
           <a-table-column title="Category" align="center">
@@ -41,7 +41,10 @@
               <a-space>
                 <a-button @click="router.push({name: 'PostsDetails', params: {id: record.id}})">Preview</a-button>
                 <a-button @click="router.push({name: 'PostsEdit', query: {id: record.id}})">Edit</a-button>
-                <a-button @click="$modal.info({ title:'Name', content:record.title })">Delete</a-button>
+                <a-popconfirm @ok="handleDeleteBlog(record.id)" :content="`are you sure to delete: ${record.title}?`"
+                              type="error">
+                  <a-button>Delete</a-button>
+                </a-popconfirm>
               </a-space>
             </template>
           </a-table-column>
@@ -64,7 +67,7 @@
 
 <script setup>
 import {onMounted, ref} from 'vue'
-import {LIST_BLOG} from '@/common/api/blog.js'
+import {LIST_BLOG, DELETE_BLOG} from '@/common/api/blog.js'
 import {useRouter} from 'vue-router';
 
 const router = useRouter()
@@ -106,6 +109,12 @@ const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp * 1000);
   return date.toLocaleString();
 }
+
+const handleDeleteBlog = async (blogId) => {
+  await DELETE_BLOG(blogId)
+  ListBlog()
+}
+
 
 </script>
 

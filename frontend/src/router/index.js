@@ -21,16 +21,16 @@ const router = createRouter({
           name: 'PostsList',
           component: () => import('../views/dashboard/posts/ListView.vue')
         },
-        // {
-        //   path: 'posts/detail/:id',
-        //   name: 'PostsDetails',
-        //   component: () => import('../views/dashboard/posts/DetailView.vue')
-        // },
-        // {
-        //   path: 'posts/edit',
-        //   name: 'PostsEdit',
-        //   component: () => import('../views/dashboard/posts/EditView.vue')
-        // },
+        {
+          path: 'posts/detail/:id',
+          name: 'PostsDetails',
+          component: () => import('../views/dashboard/posts/DetailView.vue')
+        },
+        {
+          path: 'posts/edit',
+          name: 'PostsEdit',
+          component: () => import('../views/dashboard/posts/EditView.vue')
+        },
         // {
         //   path: 'comments',
         //   name: 'CommentsList',
