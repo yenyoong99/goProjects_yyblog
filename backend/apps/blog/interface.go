@@ -33,6 +33,7 @@ func NewQueryBlogRequest() *QueryBlogRequest {
 func NewQueryBlogRequestFromGin(c *gin.Context) *QueryBlogRequest {
 	req := NewQueryBlogRequest()
 	req.CreateBy = c.Query("create_by")
+	req.Keywords = c.Query("keywords")
 	ps := c.Query("page_size")
 	if ps != "" {
 		req.PageSize, _ = strconv.Atoi(ps)
@@ -47,6 +48,7 @@ func NewQueryBlogRequestFromGin(c *gin.Context) *QueryBlogRequest {
 type QueryBlogRequest struct {
 	PageSize   int
 	PageNumber int
+	Keywords   string
 	CreateBy   string
 }
 

@@ -16,19 +16,24 @@
             :style="{ width: '320px' }"
             placeholder="search"
             allow-clear
-            @press-enter="ListBlog"
+            @change="ListBlog"
         />
       </div>
     </div>
     <div>
       <a-table :loading="isLoading" column-resizable :bordered="{cell:true}" :pagination="false" :data="data.items">
         <template #columns>
-          <a-table-column title="Id" data-index="id" align="center"></a-table-column>
+<!--          <a-table-column title="Id" data-index="id" align="center"></a-table-column>-->
           <a-table-column title="Title" data-index="title" align="center"></a-table-column>
           <a-table-column title="Author" data-index="author" align="center"></a-table-column>
           <a-table-column title="Category" align="center">
             <template #cell="{ record }">
               <a-tag key="Menu" color="pinkpurple" bordered>{{ record.tags['Menu'] }}</a-tag>
+            </template>
+          </a-table-column>
+          <a-table-column title="Last Modified" data-index="updated_at" align="center">
+            <template #cell="{ record }">
+              {{ formatTimestamp(record.updated_at) }}
             </template>
           </a-table-column>
           <a-table-column title="Action" align="center">
@@ -71,7 +76,6 @@ const ListBlog = async () => {
   try {
     const resp = await LIST_BLOG(request.value)
     data.value = resp
-    console.log(resp);
   } finally {
     isLoading.value = false
   }
@@ -97,6 +101,12 @@ const hanlePageNumberChange = (pageNumber) => {
   request.value.page_number = pageNumber
   ListBlog()
 }
+
+const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp * 1000);
+  return date.toLocaleString();
+}
+
 </script>
 
 <style lang="css" scoped>

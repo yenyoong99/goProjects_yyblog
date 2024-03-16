@@ -36,6 +36,10 @@ func (i *blogServiceImpl) QueryBlog(ctx context.Context, in *blog.QueryBlogReque
 		query = query.Where("create_by = ?", in.CreateBy)
 	}
 
+	if in.Keywords != "" {
+		query = query.Where("title like ?", "%"+in.Keywords+"%")
+	}
+
 	err := query.Count(&set.Total).Error
 	if err != nil {
 		return nil, err

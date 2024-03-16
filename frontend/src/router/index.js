@@ -44,9 +44,9 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   // access dashboard
-  if (to.fullPath.startsWith('/dashboard/')) {
+  if (to.fullPath.startsWith('/dashboard')) {
     // check login state
-    if (!state.value.isLogin) {
+    if (!state.value.token) {
       // redirect to login page
       return { name: 'LoginView' }
     }
