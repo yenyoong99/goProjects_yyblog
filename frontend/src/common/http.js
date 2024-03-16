@@ -1,4 +1,6 @@
 import axios from "axios";
+import { Message } from '@arco-design/web-vue'
+
 
 const instance = axios.create({
     timeout: 5000,
@@ -7,16 +9,24 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-    (resp) => {
-        return resp.data
+    (response) => {
+        return response.data
     },
-    (error) => {
-        console.log(error)
-        var message = error.message
-        if (error.response && error.response.data) {
-            message = error.response.data.message
+    (err) => {
+        // console.log(err)
+        var msg = err.message
+        if (err.response.data && err.response.data.message) {
+            msg = err.response.data.message
+            if (err.response.data.code === 401) {
+                window.location.assign('/login')
+            }
         }
-        return Promise.reject(new Error(message));
+
+        Message.error({
+            content: msg,
+            duration: 2000
+        })
+        return Promise.reject(err)
     }
 )
 

@@ -2,17 +2,33 @@ import instance from '../http'
 import { APP_CONFIG } from '../config'
 
 export var LIST_BLOG = (params) => {
-    return instance.get(APP_CONFIG.API_URL + 'blogs', params)
+    return instance({
+        url: APP_CONFIG.API_URL + 'blogs',
+        method: 'get',
+        params: params
+    })
 }
 
 export var GET_BLOG = (id, params) => {
-    return instance.get(APP_CONFIG.API_URL + 'blogs/${id}', params)
+    return instance({
+        url: APP_CONFIG.API_URL + 'blogs/${id}',
+        method: 'get',
+        params: params
+    })
 }
 
 export var CRATE_BLOG = (data) => {
-    return instance.post(APP_CONFIG.API_URL + 'blogs/', data)
+    return instance({
+        url: APP_CONFIG.API_URL + 'blogs/',
+        method: 'post',
+        params: data
+    })
 }
 
 export var UPDATE_BLOG = (data) => {
-    return instance.patch(APP_CONFIG.API_URL + 'blogs/${id}', data)
+    return instance({
+        url: APP_CONFIG.API_URL + 'blogs/${id}',
+        method: 'patch',
+        params: data
+    })
 }

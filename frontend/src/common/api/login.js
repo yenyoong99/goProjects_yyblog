@@ -1,6 +1,10 @@
 import instance from '../http'
 import { APP_CONFIG } from '../config'
 
-export var LOGIN = (data) => {
-    return instance.post(APP_CONFIG.APP_NAME + APP_CONFIG.API_PREFIX + 'tokens', data)
+export const LOGIN = (data) => {
+    return instance({
+        url: APP_CONFIG.API_URL + 'tokens/',
+        method: 'post',
+        data: data
+    })
 }
