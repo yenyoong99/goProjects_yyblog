@@ -4,7 +4,7 @@ import { useStorage } from '@vueuse/core'
 
 // Help encapsulate LocalStorage into a responsive Ref object
 export var state = useStorage(
-    'my-store',
+    'yyblog-store',
     {isLogin: false, username: ''},
     localStorage,
     { mergeDefaults: true }
