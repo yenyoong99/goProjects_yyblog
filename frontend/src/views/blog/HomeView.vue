@@ -1,70 +1,64 @@
 <template>
-  <div class="container">
-    <div class="left-column">
+  <div class="app">
 
-      <a-layout v-if="searchCheck" class="layout-column">
-        <a-card>
-          search result:
-        </a-card>
-      </a-layout>
+    <!-- Main Section -->
+    <main class="main-content">
+      <section class="articles-preview">
 
-      <a-layout class="layout-column">
-          <a-list :bordered="false" :pagination-props="paginationProps" :data="data.items">
-            <template #item="{ item }">
-              <a-list-item>
-                <div class="post-image-area">
-                  <img src="http://127.0.0.1:5173/assets/media/photos/photo1.jpg" />
-                  <a-card :style="{ width: '100%'}" :title="item.title" :bordered="false" hoverable>
-                    <a-list-item-meta
-                        :title="`${item.author} on ${formatTimestamp(item.updated_at)}`"
-                        :description="item.content"
-                    >
-                    </a-list-item-meta>
-                  </a-card>
-                </div>
-              </a-list-item>
-            </template>
-          </a-list>
-      </a-layout>
-    </div>
+        <div style="text-align: center">
+          <h2 class="section-title">最新文章</h2>
+          <p class="section-subtitle">希望可以带给你一些帮助和启发</p>
 
-    <div class="right-column">
-      <a-layout class="layout-column">
-        <a-card hoverable :style="{ width: '360px' }">
-          <a-input-search v-model="request.keywords" :style="{width:'320px'}" placeholder="Please enter something" button-text="Search" search-button @search="searchTrigger" @press-enter="searchTrigger"/>
-        </a-card>
-      </a-layout>
+          <a-layout-header style="margin-bottom: 15px">
+            <a-menu mode="horizontal" theme="light" default-selected-keys="['home']">
+              <a-menu-item key="home">前端</a-menu-item>
+              <a-menu-item key="tech">后端</a-menu-item>
+              <a-menu-item key="mobile">移动端</a-menu-item>
+              <a-menu-item key="about">逆向</a-menu-item>
+<!--              <a-menu-item key="ai">人工智能</a-menu-item>-->
+              <a-menu-item key="security">网络与安全</a-menu-item>
+              <a-menu-item key="os">操作系统</a-menu-item>
+              <a-menu-item key="other">其他</a-menu-item>
+            </a-menu>
+          </a-layout-header>
+        </div>
 
-      <a-layout class="layout-column">
-        <a-card hoverable :style="{ width: '360px' }">
-          <template #cover>
-            <div :style="{ height: '180px', overflow: 'hidden', }">
-              <img :style="{ width: '100%', transform: 'translateY(-20px)' }" src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a20012a2d4d5b9db43dfc6a01fe508c0.png~tplv-uwbnlip3yd-webp.webp"/>
-              <div class="avatar-overlay">
-                <img src="http://127.0.0.1:5173/assets/media/avatars/avatar1.jpg" alt="Avatar" :style="{ position: 'absolute', top: '95px', right: '120px', width: '120px', height: '120px', border: '2px solid #fff', 'border-radius':'50%' }">
-              </div>
-            </div>
-          </template>
-          <a-card-meta title="Don't give up on your dreams.😎" style="margin-top:30px; margin-bottom: 10px" align="center">
-            <template #description>
-              <icon-email></icon-email> yy@yybloger.com
-            </template>
-          </a-card-meta>
-        </a-card>
-      </a-layout>
-    </div>
+        <div class="articles-container">
+          <div class="article-card" v-for="item in data.items" :key="item">
+              <a-card class="clickable" hoverable @click="navigatePostTo(item.id)">
+                <template #cover>
+                  <div :style="{ height: '200px', overflow: 'hidden' }">
+                    <img :style="{ width: '100%', transform: 'translateY(-20px)' }" alt="dessert" :src="`https://picsum.photos/id/${item.id}/300/200`"/>
+                  </div>
+                </template>
+                <a-card-meta :title="item.title">
+                <template #description>
+                  {{ truncatedContent(item.summary) }} <br />
+                  <time class="article-date">{{ `${item.author} on ${formatTimestamp(item.created_at)}` }}</time>
+                </template>
+              </a-card-meta>
+              </a-card>
+          </div>
+        </div>
+      </section>
+
+      <!-- Load More Button -->
+      <div class="load-more-container">
+        <button @click="loadMoreArticles" class="load-more-btn" v-if="!loadMoreDisabled">加载更多</button>
+        <div v-else><a style="color: #7d7d7f">-- no more --</a></div>
+      </div>
+    </main>
   </div>
 </template>
 
 <script setup>
-
-import { reactive } from 'vue'
 import {LIST_BLOG} from '@/common/api/blog.js'
 import {onMounted, ref} from "vue";
 
-const searchCheck = ref(false)
 const isLoading = ref(false)
+const loadMoreDisabled = ref(false)
 const data = ref({items: [], total: 0});
+
 const ListBlog = async () => {
   isLoading.value = true
   try {
@@ -73,6 +67,9 @@ const ListBlog = async () => {
   } finally {
     isLoading.value = false
   }
+  if (request.value.page_size >= data.value.total) {
+    loadMoreDisabled.value = true
+  }
 }
 
 onMounted(() => {
@@ -80,14 +77,9 @@ onMounted(() => {
 })
 
 const request = ref({
-  page_size: 10,
+  page_size: 3,
   page_number: 1,
   keywords: '',
-})
-
-const paginationProps = reactive({
-  defaultPageSize: 5,
-  total: request.value.page_size
 })
 
 const formatTimestamp = (timestamp) => {
@@ -95,55 +87,122 @@ const formatTimestamp = (timestamp) => {
   return date.toLocaleString();
 }
 
-const searchTrigger = () =>{
+const loadMoreArticles = () => {
+  request.value.page_size += 3
   ListBlog()
-  searchCheck.value = !!request.value.keywords
+}
+
+const navigatePostTo = (postId) => {
+  window.location.href = '/post/' + postId.toString();
+}
+
+const truncatedContent = (content) => {
+  const maxLength = 100; // 设置最大字符数
+  if (content.length > maxLength) {
+    return content.substring(0, maxLength) + '...';
+  }
+  return content;
 }
 
 </script>
 
 <style scoped>
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-.container {
+body, button {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main Section Styles */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: white;
+}
+
+.articles-preview {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.articles-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.left-column,
-.right-column {
-  flex: 1;
-  padding: 20px;
-}
-
-.post-image-area {
+.article-card {
+  width: calc(33.333% - 1rem);
+  overflow: hidden;
   display: flex;
-  height: 150px;
-  border-radius: 2px;
+  flex-direction: column;
 }
 
-/* Adjust padding to add spacing between columns */
-.left-column {
-  padding-top: 20px;
+.article-image img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.right-column {
-  padding-top: 30px;
+.article-date {
+  color: #999;
+  margin-top: 1rem;
+  font-size: 0.8rem;
 }
 
-/* Responsive styles */
+.load-more-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.load-more-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.load-more-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .left-column,
-  .right-column {
-    flex: none;
+  .nav-bar, .user-actions {
+    display: none;
+  }
+
+  .articles-container {
+    flex-direction: column;
+  }
+
+  .article-card {
     width: 100%;
   }
 }
-
-.layout-column {
-  margin-bottom: 20px;
-}
-
-
 </style>
