@@ -25,19 +25,28 @@
 
         <div class="articles-container">
           <div class="article-card" v-for="item in data.items" :key="item">
-              <a-card class="clickable" hoverable @click="navigatePostTo(item.id)">
-                <template #cover>
-                  <div :style="{ height: '200px', overflow: 'hidden' }">
-                    <img :style="{ width: '100%', transform: 'translateY(-20px)' }" alt="dessert" :src="`https://picsum.photos/id/${item.id}/300/200`"/>
-                  </div>
-                </template>
-                <a-card-meta :title="item.title">
-                <template #description>
-                  {{ truncatedContent(item.summary) }} <br />
-                  <time class="article-date">{{ `${item.author} on ${formatTimestamp(item.created_at)}` }}</time>
-                </template>
-              </a-card-meta>
-              </a-card>
+
+            <a-skeleton v-if="isLoading" :animation="true">
+              <a-space direction="vertical" :style="{width:'100%'}" size="large">
+                <a-skeleton-line :rows="3" />
+                <a-skeleton-shape />
+              </a-space>
+            </a-skeleton>
+
+            <a-card v-else class="clickable" hoverable @click="navigatePostTo(item.id)">
+              <template #cover>
+                <div :style="{ height: '200px', overflow: 'hidden' }">
+                  <img :style="{ width: '100%', transform: 'translateY(-20px)' }" :src="`https://picsum.photos/id/${item.id}/300/200`"/>
+                </div>
+              </template>
+              <a-card-meta :title="item.title">
+              <template #description>
+                {{ truncatedContent(item.summary) }} <br />
+                <time class="article-date">{{ `${item.author} on ${formatTimestamp(item.created_at)}` }}</time>
+              </template>
+            </a-card-meta>
+            </a-card>
+
           </div>
         </div>
       </section>
@@ -65,7 +74,9 @@ const ListBlog = async () => {
     const resp = await LIST_BLOG(request.value)
     data.value = resp
   } finally {
-    isLoading.value = false
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 500);
   }
   if (request.value.page_size >= data.value.total) {
     loadMoreDisabled.value = true
