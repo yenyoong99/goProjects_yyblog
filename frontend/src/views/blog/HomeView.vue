@@ -9,6 +9,10 @@
           <h2 class="section-title">最新文章</h2>
           <p class="section-subtitle">希望可以带给你一些帮助和启发</p>
 
+          <a-card hoverable :style="{ width: '100%' }">
+            <a-input-search v-model="request.keywords" :style="{width:'100%'}" placeholder="Please enter something" button-text="Search" search-button @search="searchTrigger" @press-enter="searchTrigger"/>
+          </a-card>
+
           <a-layout-header style="margin-bottom: 15px">
             <a-menu mode="horizontal" theme="light" default-selected-keys="['home']">
               <a-menu-item key="home">前端</a-menu-item>
@@ -35,7 +39,7 @@
 
             <a-card v-else class="clickable" hoverable @click="navigatePostTo(item.id)">
               <template #cover>
-                <div :style="{ height: '200px', overflow: 'hidden' }">
+                <div :style="{ height: '250px', overflow: 'hidden' }">
                   <img :style="{ width: '100%', transform: 'translateY(-20px)' }" :src="`https://picsum.photos/id/${item.id}/300/200`"/>
                 </div>
               </template>
@@ -64,6 +68,7 @@
 import {LIST_BLOG} from '@/common/api/blog.js'
 import {onMounted, ref} from "vue";
 
+const searchCheck = ref(false)
 const isLoading = ref(false)
 const loadMoreDisabled = ref(false)
 const data = ref({items: [], total: 0});
@@ -81,6 +86,12 @@ const ListBlog = async () => {
   if (request.value.page_size >= data.value.total) {
     loadMoreDisabled.value = true
   }
+}
+
+const searchTrigger = () =>{
+  ListBlog()
+  request.value.page_size = 9
+  searchCheck.value = !!request.value.keywords
 }
 
 onMounted(() => {
@@ -139,7 +150,6 @@ body, button {
 .main-content {
   flex: 1;
   padding: 2rem;
-  background-color: white;
 }
 
 .articles-preview {
@@ -165,7 +175,7 @@ body, button {
 }
 
 .article-card {
-  width: calc(33.333% - 1rem);
+  width: calc(33.700% - 1rem);
   overflow: hidden;
   display: flex;
   flex-direction: column;

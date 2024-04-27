@@ -115,16 +115,21 @@ const Login = () => {
 .header-banner {
   text-align: center;
   padding: 3rem;
-  background-color: #e9ecef;
+  background-color: #4f5562;
+  /*background-image: url('public/banner-bg.jpg');*/
+  background-size: cover;
+  background-position: center;
 }
 
 .banner-title {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
 }
 
 .banner-subtitle {
-  color: #666;
+  color: #d3d4c5;
+  margin-bottom: 20px;
 }
 </style>

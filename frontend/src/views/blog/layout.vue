@@ -4,7 +4,7 @@
     <div class="page">
       <router-view></router-view>
     </div>
-    <div class="footer">© 2024 YYBlog. All rights reserved.</div>
+    <div class="footer">© 2024 <spam style="color: #4558cf">YYBlog</spam>. All rights reserved.</div>
   </a-config-provider>
 </template>
 
@@ -37,6 +37,6 @@ body {
   color: #666;
   border-top: 1px solid #e1e1e1;
   padding: 15px 0;
-  background-color: #f6f7f9;
+  background-color: #ffffff;
 }
 </style>

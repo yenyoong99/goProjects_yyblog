@@ -6,7 +6,7 @@
 
         <a-spin dot v-if="loadding"/>
 
-        <div v-if="!loadding && content" :style="{ background: 'var(--color-fill-2)', padding: '28px' }">
+        <div v-if="!loadding && content" :style="{ padding: '28px' }">
           <a-page-header :style="{ background: 'var(--color-bg-2)' }" :title="title" @back="router.go(-1)">
             <template #breadcrumb>
               <a-breadcrumb>
@@ -174,7 +174,6 @@ body, button {
 .main-content {
   flex: 1;
   padding: 2rem;
-  background-color: white;
 }
 
 .post-preview {
