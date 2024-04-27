@@ -50,7 +50,7 @@ import {useRouter} from 'vue-router'
 const router = useRouter()
 
 import {state} from '@/stores/index'
-import {computed, ref} from 'vue'
+import {computed} from 'vue'
 
 const isLogin = computed(() => {
   return state.value.token !== null
@@ -71,7 +71,11 @@ const Dashboard = () => {
 
 const Logout = () => {
   state.value.token = null
-  router.push({name: 'LoginView'})
+  if (currentPath.startsWith('/dashboard')) {
+    router.push({name: 'LoginView'})
+  } else {
+    router.push({name: 'BlogView'})
+  }
 }
 
 const Login = () => {

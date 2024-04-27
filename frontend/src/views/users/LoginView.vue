@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import { useRouter } from 'vue-router'
 import { state } from '@/stores/index'
 import { LOGIN } from '@/common/api/login'
@@ -51,6 +51,12 @@ const handleSubmit = (data) => {
     })
   }
 }
+
+onMounted(() => {
+  if (state.value.token !== null) {
+    router.push({name: 'Dashboard'})
+  }
+})
 
 
 const formRules = {
