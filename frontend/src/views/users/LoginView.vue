@@ -86,7 +86,7 @@ const formRules = {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('login_cover.jpg');
+  background-image: url('/login_cover.jpg');
   background-size: cover;
   position: relative;
 }
