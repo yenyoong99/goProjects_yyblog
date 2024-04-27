@@ -2,7 +2,7 @@
   <a-affix :offsetTop="0">
     <div class="top-bar">
       <div>
-        <a-image class="clickable" width="150" src="/public/logo-blue.png" :preview="false" @click="BlogView"/>
+        <a-image class="clickable" width="150" src="logo-blue.png" :preview="false" @click="BlogView"/>
 <!--        <div>YY部落站 {{ currentPath.startsWith('/dashboard') ? "Dashboard" : "" }}</div>-->
       </div>
 
