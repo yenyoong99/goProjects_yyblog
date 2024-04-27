@@ -10,7 +10,7 @@
         <!-- 导航链接 -->
         <a-layout-header v-if="!currentPath.startsWith('/dashboard')">
           <a-menu mode="horizontal" theme="light" default-selected-keys="['home']" :collapsed="isSmallScreen" :collapsed-width="50">
-            <a-menu-item key="home">首页</a-menu-item>
+            <a-menu-item key="home" @click="BlogView">首页</a-menu-item>
             <a-menu-item key="tech" disabled>技术文章</a-menu-item>
             <a-menu-item key="about" disabled>个人简介</a-menu-item>
             <a-menu-item key="contact" disabled>联系我</a-menu-item>
