@@ -7,6 +7,18 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/:pathMatch(.*)',
+      name: 'NotFound',
+      component: () => import('../views/blog/layout.vue'),
+      children: [
+        {
+          path: '',
+          name: 'NotFound',
+          component: () => import('../views/exception/NotFound.vue')
+        }
+      ]
+    },
+    {
       path: '/',
       name: 'BlogLayout',
       component: () => import('../views/blog/layout.vue'),
