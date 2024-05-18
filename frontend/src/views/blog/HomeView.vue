@@ -67,7 +67,7 @@
 
       <!-- Load More Button -->
       <div class="load-more-container">
-        <button @click="loadMoreArticles" class="load-more-btn" v-if="!loadMoreDisabled">加载更多</button>
+        <button @click="loadMoreArticles" class="load-more-btn" v-if="!loadMoreDisabled">Load More</button>
         <div v-else><a style="color: #7d7d7f">-- no more --</a></div>
       </div>
     </main>
@@ -210,7 +210,7 @@ body, button {
 
 .load-more-btn {
   padding: 0.5rem 1.5rem;
-  background-color: #007bff;
+  background-color: #515561;
   color: #fff;
   border: none;
   border-radius: 4px;
