@@ -2,6 +2,11 @@ package impl
 
 import (
 	"context"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 
 	"dario.cat/mergo"
 	"github.com/yenyoong99/goProjects_yyblog/common"
@@ -140,4 +145,30 @@ func (i *blogServiceImpl) ChangedBlogStatus(ctx context.Context, req *blog.Chang
 // AuditBlog review
 func (i *blogServiceImpl) AuditBlog(ctx context.Context, req *blog.AuditInfo) (*blog.Blog, error) {
 	return nil, nil
+}
+
+func (i *blogServiceImpl) UploadBlogImg(ctx context.Context, req *blog.UploadImageRequest) (string, error) {
+	currentDate := time.Now().Format("2006-01-02")
+	uploadDir := filepath.Join("uploads", currentDate)
+
+	if _, err := os.Stat(uploadDir); os.IsNotExist(err) {
+		err := os.MkdirAll(uploadDir, os.ModePerm)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	// Generate a random filename
+	randomFileName := common.RandStringBytes(10) + filepath.Ext(req.FileName)
+	filePath := filepath.Join(uploadDir, randomFileName)
+	err := ioutil.WriteFile(filePath, req.FileData, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
+
+	// Normalize the URL to use forward slashes
+	urlPath := filepath.Join("/uploads", currentDate, randomFileName)
+	urlPath = strings.ReplaceAll(urlPath, "\\", "/")
+
+	return urlPath, nil
 }

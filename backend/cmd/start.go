@@ -21,6 +21,9 @@ var startCmd = &cobra.Command{
 		// Protocol
 		engine := gin.Default()
 
+		// Serve static files from the uploads directory
+		engine.Static("/uploads", "./uploads")
+
 		// Cors
 		engine.Use(cors.Default())
 

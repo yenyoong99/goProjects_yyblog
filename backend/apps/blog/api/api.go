@@ -39,6 +39,8 @@ func (i *blogApiHandler) Registry(rr gin.IRouter) {
 	r.POST("/", i.CreateBlog)
 	r.PATCH("/:id", i.PatchBlog)
 	r.PUT("/:id", i.UpdateBlog)
+	r.POST("/upload", i.UploadBlogImg) // Add the upload route
+
 	// only admin role allow to delete
 	r.DELETE("/:id", middleware.Required(user.RoleAdmin), i.DeleteBlog)
 }

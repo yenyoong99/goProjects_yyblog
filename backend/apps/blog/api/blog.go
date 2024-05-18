@@ -1,11 +1,13 @@
 package api
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/yenyoong99/goProjects_yyblog/apps/blog"
 	"github.com/yenyoong99/goProjects_yyblog/apps/token"
 	"github.com/yenyoong99/goProjects_yyblog/common"
 	"github.com/yenyoong99/goProjects_yyblog/response"
+	"io/ioutil"
 )
 
 // CreateBlog POST /yyblog/api/v1/blogs
@@ -111,4 +113,46 @@ func (i *blogApiHandler) DescribeBlog(c *gin.Context) {
 		return
 	}
 	response.Success(c, ins)
+}
+
+func (i *blogApiHandler) UploadBlogImg(c *gin.Context) {
+	form, err := c.MultipartForm()
+	if err != nil {
+		response.Failed(c, err)
+		return
+	}
+
+	files := form.File["images"]
+	if len(files) == 0 {
+		response.Failed(c, errors.New("no files uploaded"))
+		return
+	}
+
+	var urls []string
+
+	for _, file := range files {
+		f, err := file.Open()
+		if err != nil {
+			response.Failed(c, err)
+			return
+		}
+		defer f.Close()
+
+		fileData, err := ioutil.ReadAll(f)
+		if err != nil {
+			response.Failed(c, err)
+			return
+		}
+
+		req := blog.NewUploadImageRequest(file.Filename, fileData)
+		url, err := i.svc.UploadBlogImg(c.Request.Context(), req)
+		if err != nil {
+			response.Failed(c, err)
+			return
+		}
+
+		urls = append(urls, url)
+	}
+
+	response.Success(c, gin.H{"urls": urls})
 }

@@ -18,6 +18,7 @@ type Service interface {
 	QueryBlog(context.Context, *QueryBlogRequest) (*BlogSet, error)
 	DescribeBlog(context.Context, *DescribeBlogRequest) (*Blog, error)
 	UpdateBlog(context.Context, *UpdateBlogRequest) (*Blog, error)
+	UploadBlogImg(ctx context.Context, req *UploadImageRequest) (string, error)
 	DeleteBlog(context.Context, *DeleteBlogRequest) (*Blog, error)
 	ChangedBlogStatus(context.Context, *ChangedBlogStatusRequest) (*Blog, error)
 	AuditBlog(context.Context, *AuditInfo) (*Blog, error)
@@ -97,4 +98,16 @@ func NewDeleteBlogRequest(id string) *DeleteBlogRequest {
 
 type DeleteBlogRequest struct {
 	Id string
+}
+
+func NewUploadImageRequest(fileName string, fileData []byte) *UploadImageRequest {
+	return &UploadImageRequest{
+		FileName: fileName,
+		FileData: fileData,
+	}
+}
+
+type UploadImageRequest struct {
+	FileName string
+	FileData []byte
 }

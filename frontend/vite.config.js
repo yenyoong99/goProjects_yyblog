@@ -18,8 +18,16 @@ export default defineConfig({
   server: {
     // host: '192.168.0.3',
     proxy: {
-      '/yyblog/api/v1': 'http://127.0.0.1:8080'
-      // '/yyblog/api/v1': 'http://192.168.111.132:8080'
+      '/uploads': {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+        pathRewrite: { '^/uploads': '/uploads' }
+      },
+      '/yyblog/api/v1': {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+        pathRewrite: { '^/yyblog/api/v1': '/yyblog/api/v1' }
+      }
     },
     port: 80,
   }

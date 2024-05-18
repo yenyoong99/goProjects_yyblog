@@ -21,6 +21,7 @@
             class="editor"
             v-model="form.content"
             @onSave="handleSave"
+            @onUploadImg="handleImageUpload"
         >
         </MdEditor>
       </a-form-item>
@@ -33,7 +34,7 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { GET_BLOG, CRATE_BLOG,UPDATE_BLOG } from '@/common/api/blog.js'
+import { GET_BLOG, CRATE_BLOG, UPDATE_BLOG, UPLOAD_BLOG_IMAGES } from '@/common/api/blog.js'
 import { state } from '../../../stores/index'
 import { Message } from '@arco-design/web-vue';
 
@@ -53,6 +54,17 @@ const form = ref({
   author: state.value.token.username,
   content: '',
 })
+
+const handleImageUpload = async (files, callback) => {
+  try {
+    const response = await UPLOAD_BLOG_IMAGES(files)
+    const { urls } = response
+    callback(urls)
+  } catch (error) {
+    Message.error('Image upload failed')
+  }
+}
+
 const handleSave = async () => {
   const err = await formRef.value.validate()
   if (!err) {

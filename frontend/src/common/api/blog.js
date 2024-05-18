@@ -33,6 +33,22 @@ export var UPDATE_BLOG = (id, data) => {
     })
 }
 
+export var UPLOAD_BLOG_IMAGES = (files) => {
+    const formData = new FormData();
+    files.forEach((file) => {
+        formData.append('images', file);
+    });
+
+    return instance({
+        url: APP_CONFIG.API_URL + 'blogs/upload',
+        method: 'post',
+        data: formData,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
 export var DELETE_BLOG = (id) => {
     return instance({
         url: APP_CONFIG.API_URL + `blogs/${id}`,
