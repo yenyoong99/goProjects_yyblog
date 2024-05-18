@@ -31,17 +31,6 @@
       </div>
     </div>
   </a-affix>
-
-  <!-- Header -->
-  <a-layout-header v-if="!currentPath.startsWith('/dashboard')">
-    <header class="header">
-      <div class="header-banner">
-        <h1 class="banner-title">YY部落站</h1>
-        <p class="banner-subtitle">欢迎来到YY部落站，这里分享最新的技术文章和个人经验。</p>
-      </div>
-    </header>
-  </a-layout-header>
-
 </template>
 
 <script setup>
@@ -105,31 +94,5 @@ const Login = () => {
 
 .full-btn {
   height: 100%;
-}
-
-/* Header Styles */
-.header {
-  flex-shrink: 0;
-}
-
-.header-banner {
-  text-align: center;
-  padding: 3rem;
-  background-color: #4f5562;
-  /*background-image: url('public/banner-bg.jpg');*/
-  background-size: cover;
-  background-position: center;
-}
-
-.banner-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 1rem;
-}
-
-.banner-subtitle {
-  color: #d3d4c5;
-  margin-bottom: 20px;
 }
 </style>

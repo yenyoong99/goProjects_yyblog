@@ -1,116 +1,47 @@
 <template>
   <div class="app">
     <!-- Main Section -->
+    <header class="post-header">
+      <h1>{{ title }}</h1>
+      <div class="meta-info">
+        <span class="author">Author: {{ author }}</span>
+        <span class="created-at">Published: {{ formatTimestamp(created_at) }}</span>
+      </div>
+    </header>
     <main class="main-content">
-      <MdPreview class="parent" :editorId="id" :modelValue="content"></MdPreview>
-
-<!--      <section class="post-preview">-->
-
-<!--        <a-spin dot v-if="loadding"/>-->
-
-<!--        <div v-if="!loadding && content">-->
-<!--          <a-page-header :style="{ background: 'var(&#45;&#45;color-bg-2)' }" :title="title" @back="router.go(-1)">-->
-<!--            <template #breadcrumb>-->
-<!--              <a-breadcrumb>-->
-<!--                <a-breadcrumb-item></a-breadcrumb-item>-->
-<!--              </a-breadcrumb>-->
-<!--            </template>-->
-<!--            <template #extra>-->
-<!--              <a-space>-->
-<!--                <span>{{ `${author} on ${formatTimestamp(created_at)}` }}</span>-->
-<!--                <a-tag color="red" size="small">Admin</a-tag>-->
-<!--              </a-space>-->
-<!--            </template>-->
-<!--            <MdPreview class="parent" :editorId="id" :modelValue="content"></MdPreview>-->
-<!--          </a-page-header>-->
-
-<!--          &lt;!&ndash; comment box &ndash;&gt;-->
-<!--          <a-page-header-->
-<!--              :style="{ background: 'var(&#45;&#45;color-bg-2)' }"-->
-<!--              title="Comment Post"-->
-<!--              :show-back="false"-->
-<!--          >-->
-<!--            <template #extra>-->
-<!--              <a-space>-->
-<!--              <span>-->
-<!--                Total comment: 1-->
-<!--              </span>-->
-<!--              </a-space>-->
-<!--            </template>-->
-<!--            <a-card :style="{ width: '100%', marginBottom: '20px' }">-->
-<!--              <div :style="{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }">-->
-<!--              <span :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }">-->
-<!--                <a-comment-->
-<!--                    author="Admin"-->
-<!--                    content="Comment body content test."-->
-<!--                    datetime="1 hour"-->
-<!--                >-->
-<!--                <template #actions>-->
-<!--                  <span class="action" key="heart" @click="onLikeChange">-->
-<!--                    <span v-if="like">-->
-<!--                      <IconHeartFill :style="{ color: '#f53f3f' }"/>-->
-<!--                    </span>-->
-<!--                    <span v-else>-->
-<!--                      <IconHeart/>-->
-<!--                    </span>-->
-<!--                    {{ 83 + (like ? 1 : 0) }}-->
-<!--                  </span>-->
-<!--                  <span class="action" key="star" @click="onStarChange">-->
-<!--                    <span v-if="star">-->
-<!--                      <IconStarFill style="{ color: '#ffb400' }"/>-->
-<!--                    </span>-->
-<!--                    <span v-else>-->
-<!--                      <IconStar/>-->
-<!--                    </span>-->
-<!--                    {{ 3 + (star ? 1 : 0) }}-->
-<!--                  </span>-->
-<!--                  <span class="action" key="reply">-->
-<!--                    <IconMessage/> Reply-->
-<!--                  </span>-->
-<!--                </template>-->
-<!--                <template #avatar>-->
-<!--                  <a-avatar>-->
-<!--                    <img-->
-<!--                        alt="avatar"-->
-<!--                        src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/3ee5f13fb09879ecb5185e440cef6eb9.png~tplv-uwbnlip3yd-webp.webp"-->
-<!--                    />-->
-<!--                  </a-avatar>-->
-<!--                </template>-->
-<!--              </a-comment>-->
-<!--              </span>-->
-<!--                &lt;!&ndash;              <a-link>More</a-link>&ndash;&gt;-->
-<!--              </div>-->
-<!--            </a-card>-->
-<!--          </a-page-header>-->
+      <a-affix :offsetTop="80">
+        <div class="child">
+          <h2 class="catalog-title">文章目录</h2>
+          <MdCatalog :editorId="id" :scrollElement="scrollElement" />
+        </div>
+      </a-affix>
+      <div class="parent">
+        <MdPreview :editorId="id" :modelValue="content"></MdPreview>
+<!--        <div class="navigation-buttons">-->
+<!--          <button @click="navigateToPrevious">Previous</button>-->
+<!--          <button @click="navigateToNext">Next</button>-->
 <!--        </div>-->
-
-<!--        <a-empty v-else>-->
-<!--          <template #image>-->
-<!--            <icon-empty/>-->
-<!--          </template>-->
-<!--          No data, please reload!-->
-<!--        </a-empty>-->
-
-<!--      </section>-->
-
+      </div>
     </main>
   </div>
 </template>
 
 <script setup>
-import {GET_BLOG} from '@/common/api/blog.js'
-import {onMounted, ref} from "vue";
-import {MdPreview} from 'md-editor-v3';
+import { GET_BLOG } from '@/common/api/blog.js'
+import { onMounted, ref } from "vue";
+import { MdPreview, MdCatalog } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 const id = 'preview-only';
 
 const router = useRouter()
 const blogId = router.currentRoute.value.params.id
 
+const scrollElement = document.documentElement;
+
 const query = ref({})
-const loadding = ref(true)
+const isLoading = ref(true)
 
 const title = ref('')
 const content = ref('')
@@ -120,16 +51,17 @@ const created_at = ref('')
 const isSmallScreen = window.innerWidth <= 768;
 
 const GetBlog = async () => {
-  loadding.value = true
+  isLoading.value = true
   try {
     const resp = await GET_BLOG(blogId, query.value)
     title.value = truncatedTitle(resp.title)
     content.value = resp.content
     author.value = resp.author
     created_at.value = resp.created_at
-
   } finally {
-    loadding.value = false
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 500);
   }
 }
 
@@ -152,9 +84,16 @@ const truncatedTitle = (title) => {
   return title;
 }
 
+// const navigateToPrevious = () => {
+//   console.log('Navigate to previous article');
+// }
+//
+// const navigateToNext = () => {
+//   console.log('Navigate to next article');
+// }
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 /* General Styles */
 * {
   margin: 0;
@@ -170,31 +109,116 @@ body, button {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #f4f4f9;
+}
+
+/* Header Styles */
+.post-header {
+  background-color: #515561;
+  /*color: #434a53;*/
+  color: #ffffff;
+  padding: 60px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-header h1 {
+  font-size: 2em;
+  margin-bottom: 15px;
+}
+
+.meta-info {
+  font-size: 0.9em;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  color: #434a53;
+}
+
+.meta-info span {
+  background-color: #f8f9fa;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
 /* Main Section Styles */
 .main-content {
-  flex: 1;
-  padding: 2rem;
-}
-
-.post-preview {
+  display: flex;
+  flex-direction: row;
   max-width: 100%;
-  margin: auto;
+  overflow: hidden;
+  padding: 20px;
 }
 
-.action {
-  display: inline-block;
-  padding: 0 4px;
-  color: var(--color-text-1);
-  line-height: 24px;
-  background: transparent;
-  border-radius: 2px;
+.child {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 20px;
+  margin-right: 20px;
+  max-width: 300px;
+  min-width: 200px;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.catalog-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.parent {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Navigation Buttons */
+/*.navigation-buttons {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  margin: 20px 0;*/
+/*}*/
+
+.navigation-buttons button {
+  background-color: #434a53;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.1s ease;
+  font-size: 1em;
+  transition: background-color 0.3s;
 }
 
-.action:hover {
-  background: var(--color-fill-3);
+.navigation-buttons button:hover {
+  background-color: #2d3138;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .child {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    height: 100%;
+    width: 250px;
+    max-width: none;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+  }
 }
 </style>

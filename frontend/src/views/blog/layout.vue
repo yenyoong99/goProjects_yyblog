@@ -4,13 +4,20 @@
     <div class="page">
       <router-view></router-view>
     </div>
-    <div class="footer">© 2024 <spam style="color: #4558cf">YYBlog</spam>. All rights reserved.</div>
+    <div class="footer">© 2024 <spam style="color: #4558cf" class="clickable" @click="BlogView">YYBlog</spam>. All rights reserved.</div>
   </a-config-provider>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 import TopBar from '../../components/TopBar.vue'
 import enUS from '@arco-design/web-vue/es/locale/lang/en-us'
+
+const router = useRouter()
+
+const BlogView = () => {
+  router.push({name: 'BlogView'})
+}
 </script>
 
 <style lang="css" scoped>
