@@ -31,6 +31,8 @@ services:
       DB_USER: root
       DB_PASSWORD: root
       APP_DOMAIN: 127.0.0.1
+    volumes:
+      - yyblog-upload-data:/backend/uploads
     restart: always
 
   yyblog-frontend:
@@ -43,3 +45,4 @@ services:
 
 volumes:
   mysql-db-data:
+  yyblog-upload-data:
