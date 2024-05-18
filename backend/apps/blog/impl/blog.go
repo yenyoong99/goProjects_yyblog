@@ -51,6 +51,7 @@ func (i *blogServiceImpl) QueryBlog(ctx context.Context, in *blog.QueryBlogReque
 	}
 
 	err = query.
+		Order("id DESC").
 		Limit(in.Limit()).
 		Offset(in.Offset()).
 		Find(&set.Items).
