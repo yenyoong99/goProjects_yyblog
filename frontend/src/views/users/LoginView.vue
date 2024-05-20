@@ -117,7 +117,7 @@ const formRules = {
 
 .login-right {
   flex: 2;
-  background: url('public/login_cover.jpg') no-repeat center center;
+  background: url('/login_cover.jpg') no-repeat center center;
   background-size: cover;
 }
 
