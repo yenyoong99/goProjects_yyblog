@@ -75,6 +75,10 @@ const Login = () => {
 
 <style lang="css" scoped>
 
+:deep(.arco-menu-inner) {
+  overflow-y: hidden;
+}
+
 .top-bar {
   position: relative;
   padding: 0 12px;
