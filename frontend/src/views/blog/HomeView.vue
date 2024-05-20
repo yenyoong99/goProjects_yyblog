@@ -139,6 +139,11 @@ const truncatedContent = (content) => {
 </script>
 
 <style scoped>
+
+.arco-trigger-menu-item {
+  padding: 0 12px;
+}
+
 /* General Styles */
 * {
   margin: 0;
