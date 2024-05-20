@@ -114,7 +114,9 @@ body, button {
 
 /* Header Styles */
 .post-header {
-  background-color: #515561;
+  background-color: #4f5562;
+  opacity: 0.9;
+  background-image: url('/login_cover.jpg');
   /*color: #434a53;*/
   color: #ffffff;
   padding: 60px;

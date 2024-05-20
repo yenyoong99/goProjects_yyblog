@@ -250,9 +250,9 @@ body, button {
 .header-banner {
   text-align: center;
   padding: 3rem;
-  /*background-color: #4f5562;*/
+  background-color: #4f5562;
   opacity: 0.9;
-  background-image: url('public/login_cover.jpg');
+  background-image: url('/login_cover.jpg');
   background-size: cover;
   background-position: center;
 }
