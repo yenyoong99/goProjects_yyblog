@@ -6,9 +6,9 @@
 <!--        <div>YY部落站 {{ currentPath.startsWith('/dashboard') ? "Dashboard" : "" }}</div>-->
       </div>
 
-      <div class="top-bar-left">
+      <div class="top-bar-right">
         <!-- 导航链接 -->
-        <a-layout-header v-if="!currentPath.startsWith('/dashboard')">
+        <a-layout-header class="custom-menu" v-if="!currentPath.startsWith('/dashboard')">
           <a-menu mode="horizontal" theme="light" default-selected-keys="['home']" :collapsed="isSmallScreen" :collapsed-width="50">
             <a-menu-item key="home" @click="BlogView">首页</a-menu-item>
             <a-menu-item key="tech" disabled>技术文章</a-menu-item>
@@ -90,13 +90,20 @@ const Login = () => {
   background-color: white;
 }
 
-.top-bar-left {
+.top-bar-right {
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+}
+
+.custom-menu {
+  width: 100%;
+  margin-right: -10%;
 }
 
 .full-btn {
+  display: flex;
   height: 100%;
 }
 </style>
