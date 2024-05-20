@@ -1,63 +1,65 @@
 <template>
-  <div class="login-container">
-    <div class="login-content">
-      <a-form :rules="formRules" :model="form" @submit="handleSubmit">
-        <div class="title">YYBlog Login</div>
-        <a-form-item hide-label field="username">
-          <a-input v-model="form.username" placeholder="Username">
-            <template #prefix>
-              <icon-user />
-            </template>
-          </a-input>
-        </a-form-item>
-        <a-form-item hide-label field="password">
-          <a-input-password v-model="form.password" placeholder="Password">
-            <template #prefix>
-              <icon-lock />
-            </template>
-          </a-input-password>
-        </a-form-item>
-        <a-form-item hide-label field="remember">
-          <a-checkbox v-model="form.remember"> Remember </a-checkbox>
-        </a-form-item>
-        <a-form-item hide-label>
-          <a-button type="primary" html-type="submit" style="width: 100%">Login</a-button>
-        </a-form-item>
-      </a-form>
+  <div class="login-page">
+    <div class="login-left">
+      <div class="login-content">
+        <img src="/public/logo-blue.png" alt="Logo" class="logo"/>
+        <div class="title">Login to YYBlog</div>
+        <a-form :rules="formRules" :model="form" @submit="handleSubmit">
+          <a-form-item hide-label field="username">
+            <a-input v-model="form.username" placeholder="Username">
+              <template #prefix>
+                <icon-user />
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item hide-label field="password">
+            <a-input-password v-model="form.password" placeholder="Password">
+              <template #prefix>
+                <icon-lock />
+              </template>
+            </a-input-password>
+          </a-form-item>
+          <a-form-item hide-label>
+            <a-button type="primary" html-type="submit" style="width: 100%">Sign In</a-button>
+          </a-form-item>
+          <div class="forgot-password">
+            <a href="#">Forgot Password?</a>
+          </div>
+        </a-form>
+      </div>
     </div>
-    <div class="footer">© 2024 YYBlog. All rights reserved.</div>
+    <div class="login-right"></div>
   </div>
 </template>
 
 <script setup>
-import {computed, onMounted, ref} from 'vue'
-import { useRouter } from 'vue-router'
-import { state } from '@/stores/index'
-import { LOGIN } from '@/common/api/login'
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { state } from '@/stores/index';
+import { LOGIN } from '@/common/api/login';
 
 const form = ref({
   username: '',
   password: '',
   remember: false
-})
+});
 
-const router = useRouter()
+const router = useRouter();
 
 const handleSubmit = (data) => {
   if (!data.errors) {
     LOGIN(form.value).then((response) => {
-      state.value.token = response
-      router.push({ name: 'Dashboard' })
-    })
+      state.value.token = response;
+      router.push({ name: 'Dashboard' });
+    });
   }
-}
+};
 
 onMounted(() => {
   if (state.value.token !== null) {
-    router.push({name: 'Dashboard'})
+    router.push({ name: 'Dashboard' });
   }
-})
-
+});
 
 const formRules = {
   username: [
@@ -76,43 +78,47 @@ const formRules = {
       message: 'Password must be at least 6 characters'
     }
   ]
-}
+};
 </script>
 
 <style scoped>
-.login-container {
-  height: 100vh;
+.login-page {
   display: flex;
-  flex-direction: column;
+  height: 100vh;
+}
+
+.login-left {
+  flex: 1;
+  display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('/login_cover.jpg');
-  background-size: cover;
-  position: relative;
+  background-color: #f7f9fc;
 }
 
 .login-content {
-  width: 400px;
-  padding: 40px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  width: 450px;
+  padding: 60px;
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+  margin-bottom: 20px;
 }
 
 .title {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-size: 18px;
   color: #333;
+  margin-bottom: 20px;
 }
 
-.footer {
-  position: fixed;
-  bottom: 10px;
-  width: 100%;
-  text-align: center;
+.login-right {
+  flex: 2;
+  background: url('public/login_cover.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.forgot-password {
   font-size: 12px;
-  color: #666;
 }
 </style>
