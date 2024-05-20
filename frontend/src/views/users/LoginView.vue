@@ -19,6 +19,9 @@
               </template>
             </a-input-password>
           </a-form-item>
+          <a-form-item hide-label field="remember">
+            <a-checkbox v-model="form.remember"> Remember </a-checkbox>
+          </a-form-item>
           <a-form-item hide-label>
             <a-button type="primary" html-type="submit" style="width: 100%">Sign In</a-button>
           </a-form-item>
