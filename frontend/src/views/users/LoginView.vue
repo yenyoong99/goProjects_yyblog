@@ -124,4 +124,19 @@ const formRules = {
 .forgot-password {
   font-size: 12px;
 }
+
+@media (max-width: 768px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-right {
+    display: none;
+  }
+
+  .login-content {
+    padding: 40px 20px;
+    width: 100%;
+  }
+}
 </style>
